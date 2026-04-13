@@ -1,7 +1,7 @@
 package novabank.repository.cuenta;
 
 import novabank.config.DatabaseConnectionManager;
-import novabank.model.Cuenta;
+import novabank.model.cuenta.Cuenta;
 
 import java.math.BigDecimal;
 import java.sql.*;
