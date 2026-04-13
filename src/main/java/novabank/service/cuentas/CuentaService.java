@@ -3,6 +3,7 @@ package novabank.service.cuentas;
 import novabank.model.cuenta.Cuenta;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.util.List;
 
 public interface CuentaService {
@@ -11,4 +12,6 @@ public interface CuentaService {
     Cuenta buscarPorNumero(String numeroCuenta);
     List<Cuenta> buscarPorClienteId(Long clienteId);
     Cuenta actualizarSaldo(Long cuentaId, BigDecimal nuevoSaldo);
+    Cuenta buscarPorNumero(String numeroCuenta, Connection conn);
+    Cuenta actualizarSaldo(Long cuentaId, BigDecimal nuevoSaldo, Connection conn);
 }
