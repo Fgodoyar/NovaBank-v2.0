@@ -22,7 +22,6 @@ public class Movimiento {
      * Constructor vacío
      */
     public Movimiento() {
-        this.id = contadorMovimiento++;
     }
 
     /**
@@ -33,7 +32,14 @@ public class Movimiento {
      * @param fecha
      */
     public Movimiento(Long id_cuenta, String tipo, BigDecimal cantidad, LocalDate fecha) {
-        this.id = contadorMovimiento++;
+        this.id_cuenta = id_cuenta;
+        this.tipo = tipo;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+    }
+
+    public Movimiento(Long id, Long id_cuenta, String tipo, BigDecimal cantidad, LocalDate fecha) {
+        this.id = id;
         this.id_cuenta = id_cuenta;
         this.tipo = tipo;
         this.cantidad = cantidad;
