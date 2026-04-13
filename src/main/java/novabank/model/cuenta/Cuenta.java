@@ -1,4 +1,4 @@
-package novabank.model;
+package novabank.model.cuenta;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

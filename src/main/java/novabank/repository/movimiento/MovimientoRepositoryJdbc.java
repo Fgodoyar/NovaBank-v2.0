@@ -1,7 +1,8 @@
 package novabank.repository.movimiento;
 
 import novabank.config.DatabaseConnectionManager;
-import novabank.model.Movimiento;
+import novabank.model.movimiento.Movimiento;
+import novabank.model.movimiento.TipoMovimiento;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -29,7 +30,7 @@ public class MovimientoRepositoryJdbc implements MovimientoRepository {
         try(Connection conn = DatabaseConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
             stmt.setLong(1, movimiento.getId_cuenta());
-            stmt.setString(2, movimiento.getTipo());
+            stmt.setString(2, movimiento.getTipo().toString());
             stmt.setBigDecimal(3, movimiento.getCantidad());
             stmt.setDate(4, Date.valueOf(movimiento.getFecha()));
 
@@ -71,8 +72,9 @@ public class MovimientoRepositoryJdbc implements MovimientoRepository {
         return new Movimiento(
                 rs.getLong("id_movimiento"),
                 rs.getLong("id_cuenta"),
-                rs.getString("tipo"),
+                TipoMovimiento.valueOf(rs.getString("tipo")),
                 rs.getBigDecimal("cantidad"),
+                rs.getString("descripcion"),
                 rs.getDate("fecha").toLocalDate()
         );
     }
@@ -99,7 +101,7 @@ public class MovimientoRepositoryJdbc implements MovimientoRepository {
     public Movimiento guardar(Movimiento movimiento, Connection conn) {
         try(PreparedStatement stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
             stmt.setLong(1, movimiento.getId_cuenta());
-            stmt.setString(2, movimiento.getTipo());
+            stmt.setString(2, movimiento.getTipo().toString());
             stmt.setBigDecimal(3, movimiento.getCantidad());
             stmt.setDate(4, Date.valueOf(movimiento.getFecha()));
 

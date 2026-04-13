@@ -1,6 +1,6 @@
 package novabank.repository.movimiento;
 
-import novabank.model.Movimiento;
+import novabank.model.movimiento.Movimiento;
 
 import java.sql.Connection;
 import java.time.LocalDateTime;

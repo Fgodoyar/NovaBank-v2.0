@@ -1,4 +1,4 @@
-package novabank.model;
+package novabank.model.movimiento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,8 +14,9 @@ public class Movimiento {
 
     private Long id;
     private Long id_cuenta;
-    private String tipo;
+    private TipoMovimiento tipo;
     private BigDecimal cantidad;
+    private String descripcion;
     private LocalDate fecha;
 
     /**
@@ -24,25 +25,20 @@ public class Movimiento {
     public Movimiento() {
     }
 
-    /**
-     * Constructor de la clase
-     * @param id_cuenta
-     * @param tipo
-     * @param cantidad
-     * @param fecha
-     */
-    public Movimiento(Long id_cuenta, String tipo, BigDecimal cantidad, LocalDate fecha) {
+    public Movimiento(Long id_cuenta, TipoMovimiento tipo, BigDecimal cantidad, String descripcion, LocalDate fecha) {
         this.id_cuenta = id_cuenta;
         this.tipo = tipo;
         this.cantidad = cantidad;
+        this.descripcion = descripcion;
         this.fecha = fecha;
     }
 
-    public Movimiento(Long id, Long id_cuenta, String tipo, BigDecimal cantidad, LocalDate fecha) {
+    public Movimiento(Long id, Long id_cuenta, TipoMovimiento tipo, BigDecimal cantidad, String descripcion, LocalDate fecha) {
         this.id = id;
         this.id_cuenta = id_cuenta;
         this.tipo = tipo;
         this.cantidad = cantidad;
+        this.descripcion = descripcion;
         this.fecha = fecha;
     }
 
@@ -82,7 +78,7 @@ public class Movimiento {
      * Obtiene el tipo de movimiento.
      * @return tipo de movimiento
      */
-    public String getTipo() {
+    public TipoMovimiento getTipo() {
         return tipo;
     }
 
@@ -90,7 +86,7 @@ public class Movimiento {
      * Inserta el tipo de movimiento
      * @param tipo
      */
-    public void setTipo(String tipo) {
+    public void setTipo(TipoMovimiento tipo) {
         this.tipo = tipo;
     }
 
@@ -108,6 +104,22 @@ public class Movimiento {
      */
     public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
+    }
+
+    /**
+     * Obtener la descripción del movimiento
+     * @return descripcion
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * Insertar la descripción del movimiento
+     * @param descripcion
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     /**
