@@ -23,9 +23,7 @@ public class Cliente {
     /**
      * Constructor vacío para implementaciones.
      */
-    public Cliente(){
-        this.id = ++contadorClientes;
-    }
+    public Cliente(){}
 
     /**
      * Constructor de la clase.
@@ -36,7 +34,16 @@ public class Cliente {
      * @param telefono
      */
     public Cliente(String nombre, String apellidos, String dni, String email, String telefono, LocalDate fecha_creacion) {
-        this.id = ++contadorClientes;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.dni = dni;
+        this.email = email;
+        this.telefono = telefono;
+        this.fecha_creacion = fecha_creacion;
+    }
+
+    public Cliente(Long id, String nombre, String apellidos, String dni, String email, String telefono, LocalDate fecha_creacion) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
