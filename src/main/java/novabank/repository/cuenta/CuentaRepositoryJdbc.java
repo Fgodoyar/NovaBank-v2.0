@@ -5,7 +5,7 @@ import novabank.model.Cuenta;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,16 +97,17 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
 
     @Override
     public List<Cuenta> buscarPorClienteId(Long clienteId) {
+        List<Cuenta> cuentas = new ArrayList<>();
         try (Connection conn = DatabaseConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SEARCH_BY_ID_CLIENTE)) {
 
             stmt.setLong(1, clienteId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return List.of(mapearCuenta(rs));
+                cuentas.add(mapearCuenta(rs));
             }
 
-            return Collections.emptyList();
+            return cuentas;
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar la cuenta con id " + clienteId, e);
         }
