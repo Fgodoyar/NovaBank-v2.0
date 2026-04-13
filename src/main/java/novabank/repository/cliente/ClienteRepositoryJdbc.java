@@ -1,7 +1,7 @@
 package novabank.repository.cliente;
 
 import novabank.config.DatabaseConnectionManager;
-import novabank.model.Cliente;
+import novabank.model.cliente.Cliente;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package novabank.model;
+package novabank.model.cliente;
 
 import java.time.LocalDate;
 
@@ -23,8 +23,7 @@ public class Cliente {
     /**
      * Constructor vacío para implementaciones.
      */
-    public Cliente(){
-    }
+    public Cliente(){}
 
     /**
      * Constructor de la clase.

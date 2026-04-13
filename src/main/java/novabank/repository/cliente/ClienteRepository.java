@@ -1,6 +1,6 @@
 package novabank.repository.cliente;
 
-import novabank.model.Cliente;
+import novabank.model.cliente.Cliente;
 
 import java.util.List;
 import java.util.Optional;
