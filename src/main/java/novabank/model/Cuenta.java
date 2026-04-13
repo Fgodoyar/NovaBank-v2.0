@@ -24,7 +24,6 @@ public class Cuenta {
      * Constructor vacío de Cuenta.
      */
     public Cuenta(){
-        this.id = contadorCuentas++;
     }
 
     /**
@@ -36,7 +35,15 @@ public class Cuenta {
      * @param fecha_creacion
      */
     public Cuenta(String numero_cuenta, String titular, long cliente_id, BigDecimal saldo, LocalDate fecha_creacion) {
-        this.id = contadorCuentas++;
+        this.numero_cuenta = numero_cuenta;
+        this.titular = titular;
+        this.cliente_id = cliente_id;
+        this.saldo = BigDecimal.ZERO;
+        this.fecha_creacion = fecha_creacion;
+    }
+
+    public Cuenta(Long id, String numero_cuenta, String titular, long cliente_id, BigDecimal saldo, LocalDate fecha_creacion) {
+        this.id = id;
         this.numero_cuenta = numero_cuenta;
         this.titular = titular;
         this.cliente_id = cliente_id;
