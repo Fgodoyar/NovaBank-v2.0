@@ -30,7 +30,8 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
 
     @Override
     public Cliente guardar(Cliente cliente) {
-        try(PreparedStatement stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
+        try(Connection conn = DatabaseConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
             stmt.setString(1, cliente.getNombre());
             stmt.setString(2, cliente.getApellidos());
             stmt.setString(3, cliente.getDni());
@@ -104,7 +105,8 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
     public List<Cliente> listarTodos() {
         List<Cliente> clientes = new ArrayList<>();
 
-        try(PreparedStatement stmt = conn.prepareStatement(SEARCH_ALL);
+        try(Connection conn = DatabaseConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(SEARCH_ALL);
             ResultSet resultSet = stmt.executeQuery()){
 
             while (resultSet.next()){
