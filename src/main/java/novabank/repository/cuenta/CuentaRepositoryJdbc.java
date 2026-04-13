@@ -128,4 +128,35 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Optional<Cuenta> buscarPorNumero(String numeroCuenta, Connection conn) {
+        try (PreparedStatement stmt = conn.prepareStatement(SEARCH_BY_IBAN)) {
+
+            stmt.setString(1, numeroCuenta);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return Optional.of(mapearCuenta(rs));
+            }
+
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar la cuenta con el número de cuenta " + numeroCuenta, e);
+        }
+    }
+
+    @Override
+    public Cuenta actualizarSaldo(Long cuentaId, BigDecimal nuevoSaldo, Connection conn) {
+        try (PreparedStatement stmt = conn.prepareStatement(UPDATE)) {
+            stmt.setBigDecimal(1, nuevoSaldo);
+            stmt.setLong(2, cuentaId);
+            stmt.executeUpdate();
+
+            return buscarPorId(cuentaId)
+                    .orElseThrow(() -> new RuntimeException("Cuenta no encontrada tras actualización"));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
