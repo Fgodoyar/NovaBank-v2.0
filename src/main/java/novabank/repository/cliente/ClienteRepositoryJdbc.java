@@ -10,8 +10,6 @@ import java.util.Optional;
 
 public class ClienteRepositoryJdbc implements ClienteRepository {
 
-    private Connection conn;
-
     private static final String INSERT = """
             INSERT INTO Clientes (nombre, apellidos, dni, email, telefono, fecha_creacion) 
             VALUES (?,?,?,?,?,?)
@@ -23,10 +21,6 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
     private static final String SEARCH_ALL = "SELECT * FROM Clientes";
 
     private static final String DELETE = "DELETE FROM Clientes WHERE id_cliente = ?";
-
-    public ClienteRepositoryJdbc(Connection conn) {
-        this.conn = conn;
-    }
 
     @Override
     public Cliente guardar(Cliente cliente) {
