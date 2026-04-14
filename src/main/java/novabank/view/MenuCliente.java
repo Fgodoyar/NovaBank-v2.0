@@ -42,18 +42,30 @@ public class MenuCliente {
 
             switch (opcion){
                 case 1:
-                    System.out.println("Introduzca el nombre del cliente: ");
-                    String nombre = scanner.nextLine();
-                    System.out.println("Introduzca los apellidos del cliente: ");
-                    String apellidos = scanner.nextLine();
-                    System.out.println("Introduzca el DNI del cliente: ");
-                    String dni = scanner.nextLine();
-                    System.out.println("Introduzca el email del cliente: ");
-                    String email = scanner.nextLine();
-                    System.out.println("Introduzca el telefono del cliente: ");
-                    String telefono = scanner.nextLine();
+                    try{
+                        System.out.println("Introduzca el nombre del cliente: ");
+                        String nombre = scanner.nextLine();
+                        System.out.println("Introduzca los apellidos del cliente: ");
+                        String apellidos = scanner.nextLine();
+                        System.out.println("Introduzca el DNI del cliente: ");
+                        String dni = scanner.nextLine();
+                        System.out.println("Introduzca el email del cliente: ");
+                        String email = scanner.nextLine();
+                        System.out.println("Introduzca el telefono del cliente: ");
+                        String telefono = scanner.nextLine();
 
-                    clienteService.guardar(nombre, apellidos, dni, email, telefono);
+                        clienteService.guardar(nombre, apellidos, dni, email, telefono);
+                    }catch (Exception e){
+                        if(e.getMessage().equals("ERROR: El email proporcionado es inválido.")){
+                            System.out.println("Email inválido!");
+                        } else if (e.getMessage().equals("ERROR: El DNI proporcionado es inválido.")) {
+                            System.out.println("DNI inválido!");
+                        } else if (e.getMessage().equals("ERROR: El teléfono proporcionado es inválido.")) {
+                            System.out.println("Teléfono inválido!");
+                        }else {
+                            e.getMessage();
+                        }
+                    }
                     break;
 
                 case 2:

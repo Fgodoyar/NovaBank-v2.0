@@ -49,6 +49,12 @@ public class MenuCuenta {
                         System.out.println("Valor no válido.");
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
+                    } catch (RuntimeException e) {
+                        if(e.getMessage().equals("cliente no encontrado")){
+                            System.out.println("No se ha encontrado al cliente.");
+                        }else {
+                            e.getMessage();
+                        }
                     }
                     break;
 
