@@ -30,12 +30,13 @@ public class CuentaServiceImpl implements CuentaService{
 
         LocalDate fecha_creacion = LocalDate.now();
         String iban = CuentaValidator.generarIBAN();
-        Cuenta cuenta = new Cuenta();
-        cuenta.setFecha_creacion(fecha_creacion);
-        cuenta.setNumero_cuenta(iban);
-        cuenta.setCliente_id(cliente.getId());
-        cuenta.setTitular(cliente.getNombre() + " " + cliente.getApellidos());
-        cuenta.setSaldo(BigDecimal.ZERO);
+        Cuenta cuenta = Cuenta.builder()
+                .fecha_creacion(fecha_creacion)
+                .numero_cuenta(iban)
+                .cliente_id(cliente.getId())
+                .titular(cliente.getNombre() + " " + cliente.getApellidos())
+                .saldo(BigDecimal.ZERO)
+                .build();
 
         return cuentaRepository.guardar(cuenta);
     }

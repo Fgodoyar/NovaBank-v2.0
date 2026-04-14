@@ -16,8 +16,6 @@ public class ClienteServiceImpl implements ClienteService {
         this.clienteRepository = new ClienteRepositoryJdbc();
     }
 
-
-
     @Override
     public Cliente guardar(String nombre, String apellidos, String dni, String email, String telefono) {
         if (!ClienteValidator.confirmarEmail(email)){
