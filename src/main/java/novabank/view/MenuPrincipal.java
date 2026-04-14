@@ -6,11 +6,13 @@ import static novabank.view.MenuConsultas.menuConsultas;
 import static novabank.view.MenuCliente.menuCliente;
 import static novabank.view.MenuCuenta.menuCuenta;
 
+import static novabank.view.MenuOperaciones.menuOperaciones;
+
+/**
+ * Menú de cada parte del proyecto
+ */
 public class MenuPrincipal {
 
-    /**
-     * Menú de cada parte del proyecto
-     */
     private static final String MOSTRARTEXTOMENU = """
             ==================================== 
               NOVABANK - SISTEMA DE OPERACIONES 
@@ -43,7 +45,7 @@ public class MenuPrincipal {
                         break;
 
                     case 3:
-                        //menuOperaciones();
+                        menuOperaciones();
                         break;
 
                     case 4:
