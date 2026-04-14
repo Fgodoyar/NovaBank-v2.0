@@ -11,11 +11,29 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Clase OperacionServiceImpl clase que implemnta la interfaz OperaciónService.
+ * Contiene toda la lógica de las operaciones bancarias (depositar, retirar y transacción).
+ *
+ * @author fgodoyar
+ */
 public class OperacionServiceImpl implements OperacionService {
 
+    /**
+     * Atributos de la clase
+     */
     private MovimientoRepository movimientoRepository;
     private CuentaRepository cuentaRepository;
 
+
+    /**
+     * Método depositar, controla que la cuenta exista y que el valor a depositar no sea menor o igual a 0.
+     * Si pasa las verificaciones, actualiza el saldo, guarda el movimiento y guarda los cambios.
+     * Si la transacción llega a fallar, realizará un rollback y se revertirán los cambios.
+     *
+     * @param numeroCuenta
+     * @param monto
+     */
     @Override
     public void depositar(String numeroCuenta, BigDecimal monto) {
         try(Connection conn = DatabaseConnectionManager.getConnection()){
@@ -58,6 +76,12 @@ public class OperacionServiceImpl implements OperacionService {
         }
     }
 
+
+    /**
+     *
+     * @param numeroCuenta
+     * @param monto
+     */
     @Override
     public void retirar(String numeroCuenta, BigDecimal monto) {
         try(Connection conn = DatabaseConnectionManager.getConnection()){
