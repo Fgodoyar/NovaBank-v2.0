@@ -4,9 +4,13 @@ import java.util.Scanner;
 
 import static novabank.view.MenuConsultas.menuConsultas;
 import static novabank.view.MenuCliente.menuCliente;
+import static novabank.view.MenuCuenta.menuCuenta;
 
 public class MenuPrincipal {
 
+    /**
+     * Menú de cada parte del proyecto
+     */
     private static final String MOSTRARTEXTOMENU = """
             ==================================== 
               NOVABANK - SISTEMA DE OPERACIONES 
@@ -35,7 +39,7 @@ public class MenuPrincipal {
                         break;
 
                     case 2:
-                        //menuCuenta();
+                        menuCuenta();
                         break;
 
                     case 3:

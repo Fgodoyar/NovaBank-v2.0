@@ -1,9 +1,12 @@
 package novabank.view;
 
 import novabank.model.movimiento.Movimiento;
+import novabank.repository.cliente.ClienteRepositoryJdbc;
 import novabank.repository.cuenta.CuentaRepository;
+import novabank.repository.cuenta.CuentaRepositoryJdbc;
 import novabank.repository.movimiento.MovimientoRepositoryJdbc;
 import novabank.service.cuentas.CuentaService;
+import novabank.service.cuentas.CuentaServiceImpl;
 import novabank.service.movimientos.MovimientoService;
 import novabank.service.movimientos.MovimientoServiceImpl;
 
@@ -17,14 +20,17 @@ import static novabank.view.MenuPrincipal.menuPrincipal;
 
 public class MenuConsultas {
 
+    private static CuentaService cuentaService =
+            new CuentaServiceImpl(new CuentaRepositoryJdbc(), new ClienteRepositoryJdbc());
+
     private static MovimientoService movimientoService =
             new MovimientoServiceImpl(new MovimientoRepositoryJdbc());
 
     private static final String MOSTRARTEXTOCONSULTAS = """
-            --- CONSULTAS --- 
-            1. Consultar saldo 
-            2. Historial de movimientos 
-            3. Movimientos por rango de fechas 
+            --- CONSULTAS ---
+            1. Consultar saldo
+            2. Historial de movimientos
+            3. Movimientos por rango de fechas
             4. Volver
             """;
 
@@ -44,10 +50,10 @@ public class MenuConsultas {
                     System.out.println("Introduzca el id de la cuenta: ");
                     Long cuentaId = Long.parseLong(scanner.nextLine());
 
-                    //BigDecimal saldo = movimientoService.consultarSaldo(cuentaId);
+                    BigDecimal saldo = cuentaService.consultarSaldo(cuentaId);
 
                     System.out.println("\n========== CONSULTA DE SALDO ==========");
-                  //  System.out.println("Saldo actual: " + saldo + " €");
+                    System.out.println("Saldo actual: " + saldo + " €");
                     System.out.println("=======================================\n");
                     break;
                 case 2:
