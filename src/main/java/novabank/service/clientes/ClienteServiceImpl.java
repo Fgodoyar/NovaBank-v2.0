@@ -13,7 +13,7 @@ public class ClienteServiceImpl implements ClienteService {
     private ClienteRepository clienteRepository;
 
     public ClienteServiceImpl(ClienteRepository clienteRepository) {
-        this.clienteRepository = new ClienteRepositoryJdbc();
+        this.clienteRepository = clienteRepository;
     }
 
     @Override
