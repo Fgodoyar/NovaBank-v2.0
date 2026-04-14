@@ -1,7 +1,6 @@
 package novabank.service.clientes;
 
 import novabank.model.cliente.Cliente;
-import novabank.model.cliente.ClienteBuilder;
 import novabank.repository.cliente.ClienteRepository;
 import novabank.repository.cliente.ClienteRepositoryJdbc;
 import novabank.validation.clientes.ClienteValidator;
@@ -31,7 +30,7 @@ public class ClienteServiceImpl implements ClienteService {
             throw new IllegalArgumentException("ERROR: El teléfono proporcionado es inválido.");
         }
 
-        Cliente cliente = new ClienteBuilder()
+        Cliente cliente = Cliente.builder()
                 .nombre(nombre)
                 .apellidos(apellidos)
                 .dni(dni)

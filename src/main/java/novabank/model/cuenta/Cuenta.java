@@ -11,7 +11,6 @@ public class Cuenta {
     /**
      * Atributos de la clase
      */
-    private static Long contadorCuentas = 1L;
 
     private Long id;
     private String numero_cuenta;

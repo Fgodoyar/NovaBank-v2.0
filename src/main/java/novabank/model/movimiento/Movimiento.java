@@ -10,7 +10,6 @@ public class Movimiento {
     /**
      * Atributos de la clase
      */
-    private static Long contadorMovimiento = 1L;
 
     private Long id;
     private Long id_cuenta;
