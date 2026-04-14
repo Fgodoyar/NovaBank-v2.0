@@ -3,6 +3,7 @@ package novabank.view;
 import java.util.Scanner;
 
 import static novabank.view.MenuConsultas.menuConsultas;
+import static novabank.view.MenuCliente.menuCliente;
 
 public class MenuPrincipal {
 
@@ -30,7 +31,7 @@ public class MenuPrincipal {
 
                 switch (opcion){
                     case 1:
-                        //menuCliente();
+                        menuCliente();
                         break;
 
                     case 2:
