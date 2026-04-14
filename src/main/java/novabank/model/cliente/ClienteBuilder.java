@@ -1,5 +1,7 @@
 package novabank.model.cliente;
 
+import java.time.LocalDate;
+
 public class ClienteBuilder {
 
     private String nombre;
@@ -7,6 +9,7 @@ public class ClienteBuilder {
     private String dni;
     private String email;
     private String telefono;
+    private String fecha_creacion;
 
     public ClienteBuilder nombre(String nombre) {
         this.nombre = nombre;
@@ -33,6 +36,12 @@ public class ClienteBuilder {
         return this;
     }
 
+    public ClienteBuilder fecha_creacion(LocalDate fecha_creacion) {
+        this.fecha_creacion = fecha_creacion.toString();
+        return this;
+    }
+
+
     public Cliente build() {
         Cliente cliente = new Cliente();
         cliente.setNombre(this.nombre);
@@ -40,6 +49,7 @@ public class ClienteBuilder {
         cliente.setDni(this.dni);
         cliente.setEmail(this.email);
         cliente.setTelefono(this.telefono);
+        cliente.setFecha_creacion(LocalDate.parse(this.fecha_creacion));
         return cliente;
     }
 }
