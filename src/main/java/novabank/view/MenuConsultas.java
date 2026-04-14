@@ -65,7 +65,7 @@ public class MenuConsultas {
                     if (movimientos.isEmpty()) {
                         System.out.println("No hay movimientos para esta cuenta.");
                     } else {
-                        System.out.println("\n========== HISTORIAL DE MOVIMIENTOS ==========");
+
                         System.out.printf("%-20s %-15s %-15s%n", "Fecha", "Tipo", "Importe");
                         System.out.println("-----------------------------------------------------------");
 
@@ -88,7 +88,6 @@ public class MenuConsultas {
                             );
                         }
 
-                        System.out.println("===========================================================\n");
                     }
                     break;
 
@@ -109,7 +108,7 @@ public class MenuConsultas {
                     if (movimientoList.isEmpty()) {
                         System.out.println("No hay movimientos en ese rango de fechas.");
                     } else {
-                        System.out.println("\n========== MOVIMIENTOS POR RANGO DE FECHAS ==========");
+
                         System.out.printf("%-20s %-15s %-15s%n", "Fecha", "Tipo", "Importe");
                         System.out.println("-----------------------------------------------------------");
 
@@ -132,7 +131,6 @@ public class MenuConsultas {
                             );
                         }
 
-                        System.out.println("===========================================================\n");
                     }
                     break;
 

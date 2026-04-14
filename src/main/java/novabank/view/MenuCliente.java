@@ -100,7 +100,7 @@ public class MenuCliente {
                     if (clientes.isEmpty()) {
                         System.out.println("No hay clientes registrados.");
                     } else {
-                        System.out.println("\n========== LISTADO DE CLIENTES ==========");
+
                         System.out.printf("%-5s %-15s %-20s %-15s %-25s %-15s%n",
                                 "ID", "Nombre", "Apellidos", "DNI", "Email", "Teléfono");
                         System.out.println("-------------------------------------------------------------------------------");
@@ -115,7 +115,6 @@ public class MenuCliente {
                                     cliente.getTelefono());
                         }
 
-                        System.out.println("===============================================================\n");
                     }
                     break;
                 case 4:

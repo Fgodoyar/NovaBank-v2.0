@@ -20,8 +20,8 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
     private static final String CONSULTA_SALDO = "SELECT saldo FROM Cuentas WHERE id_cuenta = ?";
 
     private static final String INSERT = """
-            INSERT INTO Cuentas (numero_cuenta, titular, cliente_id, saldo, fecha_creacion)
-            VALUES (?,?,?,?,?,?)
+            INSERT INTO Cuentas (numero_cuenta, titular, id_cliente, saldo, fecha_creacion)
+            VALUES (?,?,?,?,?)
             """;
 
     private static final String UPDATE = "UPDATE Cuentas SET saldo = ? WHERE id_cuenta = ?";
@@ -34,7 +34,7 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
             stmt.setString(2, cuenta.getTitular());
             stmt.setLong(3, cuenta.getCliente_id());
             stmt.setBigDecimal(4, cuenta.getSaldo());
-            stmt.setDate(5, Date.valueOf(cuenta.getFecha_creacion()));
+            stmt.setTimestamp(5, Timestamp.valueOf(cuenta.getFecha_creacion().atStartOfDay()));
 
             stmt.executeUpdate();
 

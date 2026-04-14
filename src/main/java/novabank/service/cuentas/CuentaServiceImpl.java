@@ -3,9 +3,7 @@ package novabank.service.cuentas;
 import novabank.model.cliente.Cliente;
 import novabank.model.cuenta.Cuenta;
 import novabank.repository.cliente.ClienteRepository;
-import novabank.repository.cliente.ClienteRepositoryJdbc;
 import novabank.repository.cuenta.CuentaRepository;
-import novabank.repository.cuenta.CuentaRepositoryJdbc;
 import novabank.validation.cuentas.CuentaValidator;
 
 import java.math.BigDecimal;
@@ -29,12 +27,12 @@ public class CuentaServiceImpl implements CuentaService{
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
         LocalDate fecha_creacion = LocalDate.now();
-        String iban = CuentaValidator.generarIBAN();
+        String iban = CuentaValidator.generarIBAN(cliente.getId());
         Cuenta cuenta = Cuenta.builder()
                 .fecha_creacion(fecha_creacion)
                 .numero_cuenta(iban)
-                .cliente_id(cliente.getId())
                 .titular(cliente.getNombre() + " " + cliente.getApellidos())
+                .cliente_id(cliente.getId())
                 .saldo(BigDecimal.ZERO)
                 .build();
 

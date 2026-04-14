@@ -2,11 +2,8 @@ package novabank.validation.cuentas;
 
 public final class CuentaValidator {
 
-    private static int contador = 0;
-
-    public static String generarIBAN(){
-        String numero = String.format("%012d", contador);
-        contador++;
+    public static String generarIBAN(Long cliente_id){
+        String numero = String.format("%012d", cliente_id);
 
         String iban = "ES91210000" + numero;
 

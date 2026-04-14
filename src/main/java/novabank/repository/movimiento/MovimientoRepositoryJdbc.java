@@ -57,7 +57,7 @@ public class MovimientoRepositoryJdbc implements MovimientoRepository {
 
             stmt.setLong(1, cuentaId);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 movimientos.add(mapearMovimiento(rs));
             }
 
@@ -87,7 +87,7 @@ public class MovimientoRepositoryJdbc implements MovimientoRepository {
 
             stmt.setLong(1, cuentaId);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 movimientos.add(mapearMovimiento(rs));
             }
 
