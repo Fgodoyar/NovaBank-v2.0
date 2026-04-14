@@ -23,5 +23,12 @@ public class LoggingOperacionService implements OperacionService {
         delegate.retirar(numeroCuenta, monto);
         System.out.println("[LOG] Retirada completada.");
     }
+
+    @Override
+    public void transferir(String numeroCuentaOrigen, String numeroCuentaDestino, BigDecimal importe) {
+        System.out.println("[LOG] Inicio transferencia: cuenta=" + numeroCuentaOrigen + " - " + numeroCuentaDestino);
+        delegate.transferir(numeroCuentaOrigen, numeroCuentaDestino, importe);
+        System.out.println("[LOG] Transferencia completada.");
+    }
 }
 

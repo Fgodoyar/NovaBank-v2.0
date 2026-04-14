@@ -25,6 +25,10 @@ public class OperacionServiceImpl implements OperacionService {
     private MovimientoRepository movimientoRepository;
     private CuentaRepository cuentaRepository;
 
+    public OperacionServiceImpl(MovimientoRepository movimientoRepository, CuentaRepository cuentaRepository) {
+        this.movimientoRepository = movimientoRepository;
+        this.cuentaRepository = cuentaRepository;
+    }
 
     /**
      * Método depositar, controla que la cuenta exista y que el valor a depositar no sea menor o igual a 0.
@@ -128,6 +132,7 @@ public class OperacionServiceImpl implements OperacionService {
         }
     }
 
+    @Override
     public void transferir(String numeroCuentaOrigen, String numeroCuentaDestino, BigDecimal importe) {
         try (Connection conn = DatabaseConnectionManager.getConnection()) {
             conn.setAutoCommit(false); // desactivar autocommit: inicio de transacción
