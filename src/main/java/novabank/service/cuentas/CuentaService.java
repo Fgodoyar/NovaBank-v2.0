@@ -12,6 +12,7 @@ public interface CuentaService {
     Cuenta buscarPorNumero(String numeroCuenta);
     List<Cuenta> buscarPorClienteId(Long clienteId);
     Cuenta actualizarSaldo(Long cuentaId, BigDecimal nuevoSaldo);
+    BigDecimal consultarSaldo(Long cuentaId);
     Cuenta buscarPorNumero(String numeroCuenta, Connection conn);
     Cuenta actualizarSaldo(Long cuentaId, BigDecimal nuevoSaldo, Connection conn);
 }

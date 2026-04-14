@@ -18,9 +18,9 @@ public class CuentaServiceImpl implements CuentaService{
     private CuentaRepository cuentaRepository;
     private ClienteRepository clienteRepository;
 
-    public CuentaServiceImpl(CuentaRepository cuentaRepository) {
-        this.cuentaRepository = new CuentaRepositoryJdbc();
-        this.clienteRepository = new ClienteRepositoryJdbc();
+    public CuentaServiceImpl(CuentaRepository cuentaRepository, ClienteRepository clienteRepository) {
+        this.cuentaRepository = cuentaRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     @Override
@@ -61,6 +61,11 @@ public class CuentaServiceImpl implements CuentaService{
     @Override
     public Cuenta actualizarSaldo(Long cuentaId, BigDecimal nuevoSaldo) {
         return cuentaRepository.actualizarSaldo(cuentaId, nuevoSaldo);
+    }
+
+    @Override
+    public BigDecimal consultarSaldo(Long cuentaId) {
+        return cuentaRepository.consultarSaldo(cuentaId);
     }
 
     @Override

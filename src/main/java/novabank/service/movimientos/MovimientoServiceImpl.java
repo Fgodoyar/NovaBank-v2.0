@@ -11,6 +11,11 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     private MovimientoRepository movimientoRepository;
 
+    public MovimientoServiceImpl(MovimientoRepository movimientoRepository) {
+        this.movimientoRepository = movimientoRepository;
+    }
+
+
     @Override
     public Movimiento guardar(Movimiento movimiento) {
         return movimientoRepository.guardar(movimiento);

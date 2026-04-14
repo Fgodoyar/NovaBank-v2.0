@@ -17,6 +17,8 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
 
     private static final String SEARCH_BY_ID_CLIENTE = "SELECT * FROM Cuentas WHERE id_cliente = ?";
 
+    private static final String CONSULTA_SALDO = "SELECT saldo FROM Cuentas WHERE id_cuenta = ?";
+
     private static final String INSERT = """
             INSERT INTO Cuentas (numero_cuenta, titular, cliente_id, saldo, fecha_creacion)
             VALUES (?,?,?,?,?,?)
@@ -128,6 +130,27 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public BigDecimal consultarSaldo(Long cuentaId) {
+
+        try (Connection conn = DatabaseConnectionManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(CONSULTA_SALDO)) {
+
+            stmt.setLong(1, cuentaId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getBigDecimal("saldo");
+            } else {
+                throw new RuntimeException("Cuenta no encontrada con id: " + cuentaId);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al consultar el saldo de la cuenta con id: " + cuentaId, e);
+        }
+    }
+
 
     @Override
     public Optional<Cuenta> buscarPorNumero(String numeroCuenta, Connection conn) {
