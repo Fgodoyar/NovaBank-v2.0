@@ -13,6 +13,7 @@ import novabank.service.movimientos.MovimientoServiceImpl;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,8 +38,7 @@ public class MenuConsultas {
     /**
      * Menú consultas, encargado de
      */
-    public static void menuConsultas(){
-        Scanner scanner = new Scanner(System.in);
+    public static void menuConsultas(Scanner scanner) {
         int opcion;
 
         do{
@@ -91,52 +91,59 @@ public class MenuConsultas {
                     }
                     break;
 
-
                 case 3:
-                    System.out.println("Introduzca el id de la cuenta: ");
-                    Long idCuenta = Long.parseLong(scanner.nextLine());
+                    try{
+                        System.out.println("Introduzca el id de la cuenta: ");
+                        Long idCuenta = Long.parseLong(scanner.nextLine());
 
-                    System.out.println("Introduzca una fecha de inicio (yyyy-MM-dd): ");
-                    LocalDateTime fechaInicio = LocalDate.parse(scanner.nextLine()).atStartOfDay();
+                        System.out.println("Introduzca una fecha de inicio (yyyy-MM-dd): ");
+                        LocalDateTime fechaInicio = LocalDate.parse(scanner.nextLine()).atStartOfDay();
 
-                    System.out.println("Introduzca una fecha de fin (yyyy-MM-dd): ");
-                    LocalDateTime fechaFin = LocalDate.parse(scanner.nextLine()).atStartOfDay();
+                        System.out.println("Introduzca una fecha de fin (yyyy-MM-dd): ");
+                        LocalDateTime fechaFin = LocalDate.parse(scanner.nextLine()).atStartOfDay();
 
-                    List<Movimiento> movimientoList =
-                            movimientoService.buscarPorCuentaIdYFechas(idCuenta, fechaInicio, fechaFin);
+                        List<Movimiento> movimientoList =
+                                movimientoService.buscarPorCuentaIdYFechas(idCuenta, fechaInicio, fechaFin);
 
-                    if (movimientoList.isEmpty()) {
-                        System.out.println("No hay movimientos en ese rango de fechas.");
-                    } else {
+                        if (movimientoList.isEmpty()) {
+                            System.out.println("No hay movimientos en ese rango de fechas.");
+                        } else {
 
-                        System.out.printf("%-20s %-15s %-15s%n", "Fecha", "Tipo", "Importe");
-                        System.out.println("-----------------------------------------------------------");
+                            System.out.printf("%-20s %-15s %-15s%n", "Fecha", "Tipo", "Importe");
+                            System.out.println("-----------------------------------------------------------");
 
-                        for (Movimiento movimiento : movimientoList) {
+                            for (Movimiento movimiento : movimientoList) {
 
-                            String tipo = movimiento.getTipo().toString();
-                            String importeFormateado;
+                                String tipo = movimiento.getTipo().toString();
+                                String importeFormateado;
 
-                            if ("INGRESO".equalsIgnoreCase(tipo)) {
-                                importeFormateado = "+ " + movimiento.getCantidad() + " €";
-                            } else {
-                                importeFormateado = "- " + movimiento.getCantidad() + " €";
+                                if ("INGRESO".equalsIgnoreCase(tipo)) {
+                                    importeFormateado = "+ " + movimiento.getCantidad() + " €";
+                                } else {
+                                    importeFormateado = "- " + movimiento.getCantidad() + " €";
+                                }
+
+                                System.out.printf(
+                                        "%-20s %-15s %-15s%n",
+                                        movimiento.getFecha(),
+                                        tipo,
+                                        importeFormateado
+                                );
                             }
 
-                            System.out.printf(
-                                    "%-20s %-15s %-15s%n",
-                                    movimiento.getFecha(),
-                                    tipo,
-                                    importeFormateado
-                            );
                         }
-
+                    }catch(DateTimeParseException e){
+                        System.out.println("ERROR: La fecha contiene un formato incorrecto.");
+                    }catch(NumberFormatException e){
+                        System.out.println("Valor no válido");
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
                     }
                     break;
 
 
                 case 4:
-                    menuPrincipal();
+                    break;
                 default:
                     System.out.println("Opción no válida.");
             }

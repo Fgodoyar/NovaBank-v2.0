@@ -18,14 +18,28 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente guardar(String nombre, String apellidos, String dni, String email, String telefono) {
+
+        if (nombre == null || nombre.trim().isEmpty() ||
+                apellidos == null || apellidos.trim().isEmpty() ||
+                dni == null || dni.trim().isEmpty() ||
+                email == null || email.trim().isEmpty() ||
+                telefono == null || telefono.trim().isEmpty()) {
+            System.out.println("ERROR: Por favor, rellene todos los campos.");
+        }
+
+        String mensajes = "";
+
         if (!ClienteValidator.confirmarEmail(email)){
-            throw new IllegalArgumentException("ERROR: El email proporcionado es inválido.");
+            mensajes += "ERROR: El email proporcionado es inválido.\n";
         }
         if (!ClienteValidator.confirmarDNI(dni)){
-            throw new IllegalArgumentException("ERROR: El DNI proporcionado es inválido.");
+            mensajes += "ERROR: El DNI proporcionado es inválido.\n";
         }
         if (!ClienteValidator.confirmarTelefono(telefono)){
-            throw new IllegalArgumentException("ERROR: El teléfono proporcionado es inválido.");
+            mensajes += "ERROR: El teléfono proporcionado es inválido.";
+        }
+        if(!mensajes.isEmpty()){
+            throw new RuntimeException(mensajes);
         }
 
         Cliente cliente = Cliente.builder()

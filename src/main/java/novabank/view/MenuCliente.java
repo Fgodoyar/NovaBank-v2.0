@@ -32,8 +32,7 @@ public class MenuCliente {
     /**
      * Menú que llama a los métodos de GestorClientes
      */
-    public static void menuCliente(){
-        Scanner scanner = new Scanner(System.in);
+    public static void menuCliente(Scanner scanner){
         int opcion;
 
         do{
@@ -51,20 +50,12 @@ public class MenuCliente {
                         String dni = scanner.nextLine();
                         System.out.println("Introduzca el email del cliente: ");
                         String email = scanner.nextLine();
-                        System.out.println("Introduzca el telefono del cliente: ");
+                        System.out.println("Introduzca el teléfono del cliente: ");
                         String telefono = scanner.nextLine();
 
                         clienteService.guardar(nombre, apellidos, dni, email, telefono);
                     }catch (Exception e){
-                        if(e.getMessage().equals("ERROR: El email proporcionado es inválido.")){
-                            System.out.println("Email inválido!");
-                        } else if (e.getMessage().equals("ERROR: El DNI proporcionado es inválido.")) {
-                            System.out.println("DNI inválido!");
-                        } else if (e.getMessage().equals("ERROR: El teléfono proporcionado es inválido.")) {
-                            System.out.println("Teléfono inválido!");
-                        }else {
-                            e.getMessage();
-                        }
+                        System.out.println(e.getMessage());
                     }
                     break;
 
@@ -100,8 +91,8 @@ public class MenuCliente {
                         }
 
                     } catch (NumberFormatException e) {
-                        System.out.println("Valor numérico no válido.");
-                    } catch (IllegalArgumentException e) {
+                        System.out.println("Valor no válido.");
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -130,7 +121,6 @@ public class MenuCliente {
                     }
                     break;
                 case 4:
-                    menuPrincipal();
                     break;
                 default:
                     System.out.println("Opción no válida.");

@@ -29,27 +29,28 @@ public class MenuPrincipal {
      */
     public static void menuPrincipal(){
         Scanner scanner = new Scanner(System.in);
-        int opcion;
-        try {
-            do{
+        int opcion = 0;
+
+        do{
+            try {
                 System.out.println(MOSTRARTEXTOMENU);
                 opcion = Integer.parseInt(scanner.nextLine());
 
                 switch (opcion){
                     case 1:
-                        menuCliente();
+                        menuCliente(scanner);
                         break;
 
                     case 2:
-                        menuCuenta();
+                        menuCuenta(scanner);
                         break;
 
                     case 3:
-                        menuOperaciones();
+                        menuOperaciones(scanner);
                         break;
 
                     case 4:
-                        menuConsultas();
+                        menuConsultas(scanner);
                         break;
 
                     case 5:
@@ -59,10 +60,12 @@ public class MenuPrincipal {
                     default:
                         System.out.println("Opción no válida.");
                 }
+            }catch (NumberFormatException e){
+                System.out.println("ERROR: Se ha introducido un valor inválido.");
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
 
-            }while (opcion != 5);
-        }catch (NumberFormatException e){
-            System.out.println("ERROR: Se ha introducido un valor inválido.");
-        }
+        }while (opcion != 5);
     }
 }

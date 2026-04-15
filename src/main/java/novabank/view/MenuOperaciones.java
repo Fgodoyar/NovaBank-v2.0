@@ -26,8 +26,7 @@ public class MenuOperaciones {
     /**
      * Menú operaciones, encargado de llamar a los métodos de GestorCuenta
      */
-    public static void menuOperaciones(){
-        Scanner scanner = new Scanner(System.in);
+    public static void menuOperaciones(Scanner scanner) {
         int opcion;
 
         do{
@@ -65,7 +64,7 @@ public class MenuOperaciones {
                     System.out.println("\nTransferencia realizada correctamente.\n");
                     break;
                 case 4:
-                    menuPrincipal();
+                    break;
                 default:
                     System.out.println("Opción no válida.");
             }

@@ -27,8 +27,7 @@ public class MenuCuenta {
     /**
      * Menú que llama a los métodos de cuenta
      */
-    public static void menuCuenta(){
-        Scanner scanner = new Scanner(System.in);
+    public static void menuCuenta(Scanner scanner) {
         int opcion;
 
         do{
@@ -47,14 +46,8 @@ public class MenuCuenta {
 
                     } catch (NumberFormatException e) {
                         System.out.println("Valor no válido.");
-                    } catch (IllegalArgumentException e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
-                    } catch (RuntimeException e) {
-                        if(e.getMessage().equals("cliente no encontrado")){
-                            System.out.println("No se ha encontrado al cliente.");
-                        }else {
-                            e.getMessage();
-                        }
                     }
                     break;
 
@@ -84,7 +77,7 @@ public class MenuCuenta {
 
                     } catch (NumberFormatException e) {
                         System.out.println("Valor no válido.");
-                    } catch (IllegalArgumentException e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -102,13 +95,12 @@ public class MenuCuenta {
                         System.out.println("Saldo: " + cuenta.getSaldo() + " €");
                         System.out.println("Fecha creación: " + cuenta.getFecha_creacion());
 
-                    } catch (IllegalArgumentException e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
 
                 case 4:
-                    menuPrincipal();
                     break;
                 default:
                     System.out.println("Opción no válida.");
