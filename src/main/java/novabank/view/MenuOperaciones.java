@@ -2,6 +2,7 @@ package novabank.view;
 
 import novabank.repository.cuenta.CuentaRepositoryJdbc;
 import novabank.repository.movimiento.MovimientoRepositoryJdbc;
+import novabank.service.operaciones.LoggingOperacionService;
 import novabank.service.operaciones.OperacionService;
 import novabank.service.operaciones.OperacionServiceImpl;
 
@@ -14,6 +15,9 @@ public class MenuOperaciones {
 
     private static OperacionService operacionService =
             new OperacionServiceImpl(new MovimientoRepositoryJdbc(), new CuentaRepositoryJdbc());
+
+    private static OperacionService operacionServiceConLogs =
+            new LoggingOperacionService(operacionService);
 
     private static final String MOSTRARTEXTOOPERACIONES = """
             --- OPERACIONES FINANCIERAS --- 
@@ -39,7 +43,7 @@ public class MenuOperaciones {
                     String numeroCuenta = scanner.nextLine();
                     System.out.println("Introduzca la cantidad a depositar: ");
                     BigDecimal cantidad_ingresar = new BigDecimal(scanner.nextLine());
-                    operacionService.depositar(numeroCuenta, cantidad_ingresar);
+                    operacionServiceConLogs.depositar(numeroCuenta, cantidad_ingresar);
 
                     System.out.println("\nDepósito realizado correctamente.\n");
                     break;
@@ -48,7 +52,7 @@ public class MenuOperaciones {
                     String numero_cuenta = scanner.nextLine();
                     System.out.println("Introduzca la cantidad a retirar: ");
                     BigDecimal cantidad_retirar = new BigDecimal(scanner.nextLine());
-                    operacionService.retirar(numero_cuenta, cantidad_retirar);
+                    operacionServiceConLogs.retirar(numero_cuenta, cantidad_retirar);
 
                     System.out.println("\nRetirada realizada correctamente.\n");
                     break;
@@ -59,7 +63,7 @@ public class MenuOperaciones {
                     String numeroCuentaDestino = scanner.nextLine();
                     System.out.println("Introduzca la cantidad que desea transferir: ");
                     BigDecimal cantidad_transaccion = new BigDecimal(scanner.nextLine());
-                    operacionService.transferir(numeroCuentaOrigen, numeroCuentaDestino, cantidad_transaccion);
+                    operacionServiceConLogs.transferir(numeroCuentaOrigen, numeroCuentaDestino, cantidad_transaccion);
 
                     System.out.println("\nTransferencia realizada correctamente.\n");
                     break;
