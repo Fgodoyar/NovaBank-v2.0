@@ -71,8 +71,7 @@ public class MenuConsultas {
                         System.out.printf("%-20s %-15s %-15s%n", "Fecha", "Tipo", "Importe");
                         System.out.println("-----------------------------------------------------------");
 
-                        for (Movimiento movimiento : movimientos) {
-
+                        movimientos.forEach(movimiento -> {
                             String tipo = movimiento.getTipo().toString();
                             String importeFormateado;
 
@@ -88,7 +87,7 @@ public class MenuConsultas {
                                     tipo,
                                     importeFormateado
                             );
-                        }
+                        });
 
                     }
                     break;
@@ -114,8 +113,7 @@ public class MenuConsultas {
                             System.out.printf("%-20s %-15s %-15s%n", "Fecha", "Tipo", "Importe");
                             System.out.println("-----------------------------------------------------------");
 
-                            for (Movimiento movimiento : movimientoList) {
-
+                            movimientoList.forEach(movimiento ->{
                                 String tipo = movimiento.getTipo().toString();
                                 String importeFormateado;
 
@@ -131,7 +129,7 @@ public class MenuConsultas {
                                         tipo,
                                         importeFormateado
                                 );
-                            }
+                            });
 
                         }
                     }catch(NumberFormatException e){

@@ -65,13 +65,13 @@ public class MenuCuenta {
                                     "ID", "Número Cuenta", "Saldo", "Fecha creación");
                             System.out.println("-------------------------------------------------------------");
 
-                            for (Cuenta cuenta : cuentas) {
+                            cuentas.forEach(cuenta -> {
                                 System.out.printf("%-5d %-20s %-15s %-15s%n",
                                         cuenta.getId(),
                                         cuenta.getNumero_cuenta(),
                                         cuenta.getSaldo() + " €",
                                         cuenta.getFecha_creacion());
-                            }
+                            });
 
                         }
 
