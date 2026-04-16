@@ -16,25 +16,8 @@ Se ha refactorizado la arquitectura siguiendo una arquitectura por capas.
 El propósito de esto es mejorar la mantenibilidad y separación de responsabilidades.
 
 La arquitectura que se ha seguido es la siguiente:
-┌──────────────────────────────┐
-│      CAPA DE PRESENTACIÓN    │
-│  (menús, entrada/salida)     │
-└──────────────┬───────────────┘
-               │
-┌──────────────▼───────────────┐
-│        CAPA DE SERVICIOS     │
-│     (lógica de negocio)      │
-└──────────────┬───────────────┘
-               │
-┌──────────────▼───────────────┐
-│        CAPA DE DOMINIO       │
-│ (Cliente, Cuenta, Movimiento)│
-└──────────────┬───────────────┘
-               │
-┌──────────────▼───────────────┐
-│     CAPA DE PERSISTENCIA     │
-│       (Repositorios JDBC)    │
-└──────────────────────────────┘
+
+CAPA DE PRESENTACIÓN-->CAPA DE SERVICIOS-->CAPA DE DOMINIO-->CAPA DE PERSISTENCIA
 
 ---
 
