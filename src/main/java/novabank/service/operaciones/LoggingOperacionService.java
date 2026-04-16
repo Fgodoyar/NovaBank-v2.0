@@ -2,6 +2,9 @@ package novabank.service.operaciones;
 
 import java.math.BigDecimal;
 
+/**
+ * Clase que implementa un LOG a las operaciones bancarias
+ */
 public class LoggingOperacionService implements OperacionService {
 
     private final OperacionService delegate; // el servicio real envuelto

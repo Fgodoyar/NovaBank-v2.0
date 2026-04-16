@@ -5,12 +5,20 @@ import novabank.model.cuenta.Cuenta;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Clase CuentaRepositoryJdbc que implementa los métodos de CuentaRepository.
+ * Esta clase es la capa de acceso a datos relacionada con Cuentas.
+ */
 public class CuentaRepositoryJdbc implements CuentaRepository{
 
+    /**
+     * Consultas de la clase
+     */
     private static final String SEARCH_BY_ID = "SELECT * FROM Cuentas WHERE id_cuenta = ?";
 
     private static final String SEARCH_BY_IBAN = "SELECT * FROM Cuentas WHERE numero_cuenta = ?";
@@ -24,8 +32,16 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
             VALUES (?,?,?,?,?)
             """;
 
-    private static final String UPDATE = "UPDATE Cuentas SET saldo = ? WHERE id_cuenta = ?";
+    private static final String UPDATE_SALDO = "UPDATE Cuentas SET saldo = ? WHERE id_cuenta = ?";
 
+    /**
+     * Método guardar que se encarga de realizar la consulta INSERT en la base de datos.
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL y ejecutamos
+     * la consulta, después, obtenemos la clave autogenerada de la base de datos con el ResultSet
+     * y devolvemos la cuenta guardada.
+     * @param cuenta
+     * @return la cuenta guardada
+     */
     @Override
     public Cuenta guardar(Cuenta cuenta) {
         try(Connection conn = DatabaseConnectionManager.getConnection();
@@ -34,7 +50,7 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
             stmt.setString(2, cuenta.getTitular());
             stmt.setLong(3, cuenta.getCliente_id());
             stmt.setBigDecimal(4, cuenta.getSaldo());
-            stmt.setTimestamp(5, Timestamp.valueOf(cuenta.getFecha_creacion().atStartOfDay()));
+            stmt.setObject(5, cuenta.getFecha_creacion());
 
             stmt.executeUpdate();
 
@@ -51,6 +67,14 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
         }
     }
 
+    /**
+     * Método para buscar una cuenta por su id a través de la consulta SEARCH_BY_ID.
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL y
+     * después, ejecutamos la consulta, leemos los datos con el ResultSet utilizando
+     * el método mapearCuenta y devolvemos la cuenta.
+     * @param id
+     * @return cuenta encontrada
+     */
     @Override
     public Optional<Cuenta> buscarPorId(Long id) {
         try (Connection conn = DatabaseConnectionManager.getConnection();
@@ -76,10 +100,18 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
                 rs.getString("titular"),
                 rs.getLong("id_cliente"),
                 rs.getBigDecimal("saldo"),
-                rs.getDate("fecha_creacion").toLocalDate()
+                rs.getObject("fecha_creacion", LocalDateTime.class)
         );
     }
 
+    /**
+     * Método para buscar una cuenta por su numero de cuenta a través de la consulta SEARCH_BY_IBAN.
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL y
+     * después, ejecutamos la consulta, leemos los datos con el ResultSet utilizando
+     * el método mapearCuenta y devolvemos la cuenta.
+     * @param numeroCuenta
+     * @return cuenta encontrada
+     */
     @Override
     public Optional<Cuenta> buscarPorNumero(String numeroCuenta) {
         try (Connection conn = DatabaseConnectionManager.getConnection();
@@ -97,6 +129,14 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
         }
     }
 
+    /**
+     * Método para buscar las cuentas de un cliente por su id a través de la consulta SEARCH_BY_ID_CLIENTE.
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL y ejecutamos
+     * la consulta, después, añadimos las cuentas a la lista, leemos
+     * los datos con el ResultSet utilizando el método mapearCuenta y devolvemos la lista.
+     * @param clienteId
+     * @return cuentas encontradas
+     */
     @Override
     public List<Cuenta> buscarPorClienteId(Long clienteId) {
         List<Cuenta> cuentas = new ArrayList<>();
@@ -115,10 +155,18 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
         }
     }
 
+    /**
+     * Método que actualiza el saldo de una cuenta a través de la consulta UPDATE_SALDO
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL, ejecutamos
+     * la consulta y devolvemos el saldo actualizado.
+     * @param cuentaId
+     * @param nuevoSaldo
+     * @return saldo actualizado
+     */
     @Override
     public Cuenta actualizarSaldo(Long cuentaId, BigDecimal nuevoSaldo) {
         try (Connection conn = DatabaseConnectionManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(UPDATE)) {
+             PreparedStatement stmt = conn.prepareStatement(UPDATE_SALDO)) {
             stmt.setBigDecimal(1, nuevoSaldo);
             stmt.setLong(2, cuentaId);
             stmt.executeUpdate();
@@ -131,6 +179,13 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
         }
     }
 
+    /**
+     * Método que se encarga de mostrar el saldo actual de una cuenta a través de la consulta CONSULTA_SALDO
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL, ejecutamos
+     * la consulta y devolvemos el saldo actual.
+     * @param cuentaId
+     * @return
+     */
     @Override
     public BigDecimal consultarSaldo(Long cuentaId) {
 
@@ -152,6 +207,16 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
     }
 
 
+    /**
+     * Método para buscar una cuenta por su numero de cuenta a través de la consulta SEARCH_BY_IBAN.
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL y
+     * después, ejecutamos la consulta, leemos los datos con el ResultSet utilizando
+     * el método mapearCuenta y devolvemos la cuenta.
+     * Recibe la conexión como parámetro para que las operaciones usen la misma transacción.
+     * @param numeroCuenta
+     * @param conn
+     * @return cuenta encontrada
+     */
     @Override
     public Optional<Cuenta> buscarPorNumero(String numeroCuenta, Connection conn) {
         try (PreparedStatement stmt = conn.prepareStatement(SEARCH_BY_IBAN)) {
@@ -168,9 +233,19 @@ public class CuentaRepositoryJdbc implements CuentaRepository{
         }
     }
 
+    /**
+     * Método que actualiza el saldo de una cuenta a través de la consulta UPDATE_SALDO
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL, ejecutamos
+     * la consulta y devolvemos el saldo actualizado.
+     * Recibe la conexión como parámetro para que las operaciones usen la misma transacción.
+     * @param cuentaId
+     * @param nuevoSaldo
+     * @param conn
+     * @return saldo actualizado
+     */
     @Override
     public Cuenta actualizarSaldo(Long cuentaId, BigDecimal nuevoSaldo, Connection conn) {
-        try (PreparedStatement stmt = conn.prepareStatement(UPDATE)) {
+        try (PreparedStatement stmt = conn.prepareStatement(UPDATE_SALDO)) {
             stmt.setBigDecimal(1, nuevoSaldo);
             stmt.setLong(2, cuentaId);
             stmt.executeUpdate();

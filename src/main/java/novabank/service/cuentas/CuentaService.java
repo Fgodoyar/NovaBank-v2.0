@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
+/**
+ * Método CuentaService que define los métodos que tendrá su futura implementación.
+ */
 public interface CuentaService {
     Cuenta guardar(Long id_titular);
     Cuenta buscarPorId(Long id);

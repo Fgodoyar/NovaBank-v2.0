@@ -2,6 +2,7 @@ package novabank.model.movimiento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MovimientoFactory {
 
@@ -11,7 +12,7 @@ public class MovimientoFactory {
                 TipoMovimiento.DEPOSITO,
                 monto,
                 "Deposito en cuenta",
-                LocalDate.now()
+                LocalDateTime.now()
         );
     }
 
@@ -21,7 +22,7 @@ public class MovimientoFactory {
                 TipoMovimiento.RETIRO,
                 monto,
                 "Retirada de fondos",
-                LocalDate.now()
+                LocalDateTime.now()
         );
     }
 
@@ -37,7 +38,7 @@ public class MovimientoFactory {
                 TipoMovimiento.TRANSFERENCIA_SALIENTE,
                 monto,
                 descripcion,
-                LocalDate.now()
+                LocalDateTime.now()
 
         );
     }
@@ -54,7 +55,7 @@ public class MovimientoFactory {
                 TipoMovimiento.TRANSFERENCIA_ENTRANTE,
                 monto,
                 descripcion,
-                LocalDate.now()
+                LocalDateTime.now()
         );
     }
 }

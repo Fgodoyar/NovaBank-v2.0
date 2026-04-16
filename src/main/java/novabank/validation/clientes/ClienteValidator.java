@@ -1,10 +1,21 @@
 package novabank.validation.clientes;
 
+/**
+ * Clase ClienteValidator que lleva las validaciones que debe cumplir un cliente al registrarse
+ */
 public final class ClienteValidator {
 
+    /**
+     * Constructor de la clase
+     */
     private ClienteValidator() {
     }
 
+    /**
+     * Método ConfirmarDNI se encarga de que el dni cumpla un patrón como este: 7654321A
+     * @param dni
+     * @return true o false
+     */
     public static boolean confirmarDNI(String dni) {
         if (dni == null || dni.isEmpty()) {
             return false;
@@ -13,6 +24,11 @@ public final class ClienteValidator {
         return dni.matches(dniPattern);
     }
 
+    /**
+     * Método ConfirmarTelefono se encarga de que el telefono cumpla un patrón como este: 612345678
+     * @param telefono
+     * @return true o false
+     */
     public static boolean confirmarTelefono(String telefono) {
         if (telefono == null || telefono.isEmpty()) {
             return false;
@@ -21,6 +37,11 @@ public final class ClienteValidator {
         return telefono.matches(phonePattern);
     }
 
+    /**
+     * Método ConfirmarEmail se encarga de que el email cumpla un patrón como este: ejemplo12@gmail.com
+     * @param email
+     * @return true o false
+     */
     public static boolean confirmarEmail(String email) {
         if (email == null || email.isEmpty()) {
             return false;

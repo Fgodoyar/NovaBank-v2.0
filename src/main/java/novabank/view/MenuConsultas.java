@@ -14,8 +14,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static novabank.view.MenuPrincipal.menuPrincipal;
 
@@ -97,10 +99,10 @@ public class MenuConsultas {
                         Long idCuenta = Long.parseLong(scanner.nextLine());
 
                         System.out.println("Introduzca una fecha de inicio (yyyy-MM-dd): ");
-                        LocalDateTime fechaInicio = LocalDate.parse(scanner.nextLine()).atStartOfDay();
+                        String fechaInicio = scanner.nextLine();
 
                         System.out.println("Introduzca una fecha de fin (yyyy-MM-dd): ");
-                        LocalDateTime fechaFin = LocalDate.parse(scanner.nextLine()).atStartOfDay();
+                        String fechaFin = scanner.nextLine();
 
                         List<Movimiento> movimientoList =
                                 movimientoService.buscarPorCuentaIdYFechas(idCuenta, fechaInicio, fechaFin);
@@ -132,15 +134,12 @@ public class MenuConsultas {
                             }
 
                         }
-                    }catch(DateTimeParseException e){
-                        System.out.println("ERROR: La fecha contiene un formato incorrecto.");
                     }catch(NumberFormatException e){
                         System.out.println("Valor no válido");
                     }catch (Exception e){
                         System.out.println(e.getMessage());
                     }
                     break;
-
 
                 case 4:
                     break;

@@ -2,6 +2,7 @@ package novabank.model.movimiento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Clase Movimiento
@@ -16,7 +17,7 @@ public class Movimiento {
     private TipoMovimiento tipo;
     private BigDecimal cantidad;
     private String descripcion;
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     /**
      * Constructor vacío
@@ -24,7 +25,7 @@ public class Movimiento {
     public Movimiento() {
     }
 
-    public Movimiento(Long id_cuenta, TipoMovimiento tipo, BigDecimal cantidad, String descripcion, LocalDate fecha) {
+    public Movimiento(Long id_cuenta, TipoMovimiento tipo, BigDecimal cantidad, String descripcion, LocalDateTime fecha) {
         this.id_cuenta = id_cuenta;
         this.tipo = tipo;
         this.cantidad = cantidad;
@@ -32,7 +33,7 @@ public class Movimiento {
         this.fecha = fecha;
     }
 
-    public Movimiento(Long id, Long id_cuenta, TipoMovimiento tipo, BigDecimal cantidad, String descripcion, LocalDate fecha) {
+    public Movimiento(Long id, Long id_cuenta, TipoMovimiento tipo, BigDecimal cantidad, String descripcion, LocalDateTime fecha) {
         this.id = id;
         this.id_cuenta = id_cuenta;
         this.tipo = tipo;
@@ -125,7 +126,7 @@ public class Movimiento {
      * Obtiene la fecha en la que se realizó el movimiento.
      * @return fecha de movimiento
      */
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
@@ -133,7 +134,7 @@ public class Movimiento {
      * Inserta la fecha del movimiento.
      * @param fecha
      */
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 }

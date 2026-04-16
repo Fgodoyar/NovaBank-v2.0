@@ -20,7 +20,8 @@ public class MenuCliente {
             1. Crear cliente 
             2. Buscar cliente 
             3. Listar clientes 
-            4. Volver
+            4. Eliminar cliente
+            5. Volver
             """;
 
     private static final String BUSQUEDA = """
@@ -106,9 +107,9 @@ public class MenuCliente {
 
                         System.out.printf("%-5s %-15s %-20s %-15s %-25s %-15s%n",
                                 "ID", "Nombre", "Apellidos", "DNI", "Email", "Teléfono");
-                        System.out.println("-------------------------------------------------------------------------------");
+                        System.out.println("--------------------------------------------------------------------------------------------------------------------");
 
-                        for (Cliente cliente : clientes) {
+                        clientes.forEach(cliente -> {
                             System.out.printf("%-5d %-15s %-20s %-15s %-25s %-15s%n",
                                     cliente.getId(),
                                     cliente.getNombre(),
@@ -116,16 +117,28 @@ public class MenuCliente {
                                     cliente.getDni(),
                                     cliente.getEmail(),
                                     cliente.getTelefono());
-                        }
-
+                        });
                     }
                     break;
                 case 4:
+                    System.out.println("Introduzca el ID del cliente a eliminar: ");
+                    Long id = Long.parseLong(scanner.nextLine());
+                    System.out.println("Para confirmar su eliminación, por favor escriba DELETE en mayúscula: ");
+                    String eliminar = scanner.nextLine();
+
+                    if(eliminar.equals("DELETE")){
+                        clienteService.eliminar(id);
+                        System.out.println("Cliente eliminado.");
+                    }else {
+                        System.out.println("ERROR: No se ha podido eliminar el cliente.");
+                    }
+                    break;
+                case 5:
                     break;
                 default:
                     System.out.println("Opción no válida.");
             }
 
-        }while(opcion != 4);
+        }while(opcion != 5);
     }
 }

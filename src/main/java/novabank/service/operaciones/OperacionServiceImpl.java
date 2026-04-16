@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Clase OperacionServiceImpl clase que implemnta la interfaz OperaciónService.
+ * Clase OperacionServiceImpl clase que implementa la interfaz OperaciónService.
  * Contiene toda la lógica de las operaciones bancarias (depositar, retirar y transacción).
  *
  * @author fgodoyar
@@ -25,6 +25,11 @@ public class OperacionServiceImpl implements OperacionService {
     private MovimientoRepository movimientoRepository;
     private CuentaRepository cuentaRepository;
 
+    /**
+     * Constructor de la clase
+     * @param movimientoRepository
+     * @param cuentaRepository
+     */
     public OperacionServiceImpl(MovimientoRepository movimientoRepository, CuentaRepository cuentaRepository) {
         this.movimientoRepository = movimientoRepository;
         this.cuentaRepository = cuentaRepository;
@@ -49,7 +54,7 @@ public class OperacionServiceImpl implements OperacionService {
                         .orElseThrow(() -> new RuntimeException("No existe el cuenta con el numero: " + numeroCuenta));
 
                 if (monto.compareTo(BigDecimal.ZERO) <= 0){
-                    throw new RuntimeException("Monto no puede ser menor que zero");
+                    throw new RuntimeException("Monto no puede ser menor que cero");
                 }
 
                 cuentaRepository.actualizarSaldo(
@@ -82,7 +87,10 @@ public class OperacionServiceImpl implements OperacionService {
 
 
     /**
-     *
+     * Método retirar, controla que la cuenta exista, que el valor a depositar no sea menor o igual a 0 y
+     * que no se pueda retirar si la cantidad a retirar es mayor al saldo de la cuenta.
+     * Si pasa las verificaciones, actualiza el saldo, guarda el movimiento y guarda los cambios.
+     * Si la transacción llega a fallar, realizará un rollback y se revertirán los cambios.
      * @param numeroCuenta
      * @param monto
      */
@@ -132,6 +140,7 @@ public class OperacionServiceImpl implements OperacionService {
         }
     }
 
+
     @Override
     public void transferir(String numeroCuentaOrigen, String numeroCuentaDestino, BigDecimal importe) {
         try (Connection conn = DatabaseConnectionManager.getConnection()) {
@@ -143,6 +152,10 @@ public class OperacionServiceImpl implements OperacionService {
                 Cuenta origen = cuentaRepository
                         .buscarPorNumero(numeroCuentaOrigen, conn)
                         .orElseThrow(() -> new RuntimeException("No se encontró la cuenta origen con número " + numeroCuentaOrigen));
+
+                if (origen.getNumero_cuenta().equals(numeroCuentaDestino)) {
+                    throw new RuntimeException("El origen no puede ser igual al destino");
+                }
 
                 if (origen.getSaldo().compareTo(importe) < 0) {
                     throw new RuntimeException("Saldo insuficiente");

@@ -4,15 +4,22 @@ import novabank.config.DatabaseConnectionManager;
 import novabank.model.cliente.Cliente;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Clase ClienteRepositoryJdbc que implementa la interfaz ClienteRepository
+ */
 public class ClienteRepositoryJdbc implements ClienteRepository {
 
+    /**
+     * Consultas de la clase
+     */
     private static final String INSERT = """
-            INSERT INTO Clientes (nombre, apellidos, dni, email, telefono, fecha_creacion) 
-            VALUES (?,?,?,?,?,?)
+            INSERT INTO Clientes (nombre, apellidos, dni, email, telefono) 
+            VALUES (?,?,?,?,?)
             """;
     private static final String SEARCH_BY_ID = "SELECT * FROM Clientes WHERE id_cliente = ?";
 
@@ -22,6 +29,14 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
 
     private static final String DELETE = "DELETE FROM Clientes WHERE id_cliente = ?";
 
+    /**
+     * Método guardar que se encarga de realizar la consulta INSERT en la base de datos.
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL y ejecutamos
+     * la consulta, después, obtenemos la clave autogenerada de la base de datos con el ResultSet
+     * y devolvemos el cliente guardado.
+     * @param cliente
+     * @return la cuenta guardada
+     */
     @Override
     public Cliente guardar(Cliente cliente) {
         try(Connection conn = DatabaseConnectionManager.getConnection();
@@ -31,7 +46,6 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
             stmt.setString(3, cliente.getDni());
             stmt.setString(4, cliente.getEmail());
             stmt.setString(5, cliente.getTelefono());
-            stmt.setDate(6, Date.valueOf(cliente.getFecha_creacion()));
 
             stmt.executeUpdate();
 
@@ -48,6 +62,14 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
         }
     }
 
+    /**
+     * Método para buscar un cliente por su id a través de la consulta SEARCH_BY_ID.
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL y
+     * después, ejecutamos la consulta, leemos los datos con el ResultSet utilizando
+     * el método mapearCliente y devolvemos el cliente encontrado.
+     * @param id
+     * @return cliente encontrado
+     */
     @Override
     public Optional<Cliente> buscarPorId(Long id) {
         try (Connection conn = DatabaseConnectionManager.getConnection();
@@ -74,11 +96,19 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
                 rs.getString("dni"),
                 rs.getString("email"),
                 rs.getString("telefono"),
-                rs.getDate("fecha_creacion").toLocalDate()
+                rs.getObject("fecha_creacion", LocalDateTime.class)
         );
     }
 
-        @Override
+    /**
+     * Método para buscar un cliente por su id a través de la consulta SEARCH_BY_DNI.
+     * Asignamos los valores con PreparedStatement para evitar inyecciones SQL y
+     * después, ejecutamos la consulta, leemos los datos con el ResultSet utilizando
+     * el método mapearCliente y devolvemos el cliente encontrado.
+     * @param dni
+     * @return cliente encontrado
+     */
+    @Override
     public Optional<Cliente> buscarPorDni(String dni) {
             try (Connection conn = DatabaseConnectionManager.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(SEARCH_BY_DNI)) {
@@ -95,6 +125,12 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
             }
     }
 
+    /**
+     * Método que se encarga de listar todos los clientes a través de la consulta SEARCH_ALL.
+     * Ejecutamos la consulta, después, añadimos los clientes a la lista, leemos
+     * los datos con el ResultSet utilizando el método mapearMovimientos y devolvemos la lista.
+     * @return clientes encontrados
+     */
     @Override
     public List<Cliente> listarTodos() {
         List<Cliente> clientes = new ArrayList<>();
@@ -115,6 +151,11 @@ public class ClienteRepositoryJdbc implements ClienteRepository {
         return clientes;
     }
 
+    /**
+     * Método eliminar que elimina a un cliente de la base de datos a través de la consulta DELETE.
+     * Asignamos los valores con PreparedStatement y ejecutamos la consulta.
+     * @param id
+     */
     @Override
     public void eliminar(Long id) {
         try(Connection conn = DatabaseConnectionManager.getConnection();

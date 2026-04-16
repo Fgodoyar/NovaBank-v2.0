@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interfaz CuentaRepository que se encarga de definir los métodos de su futura implementación
+ */
 public interface CuentaRepository {
     Cuenta guardar(Cuenta cuenta);
     Optional<Cuenta> buscarPorId(Long id);

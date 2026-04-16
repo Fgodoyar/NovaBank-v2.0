@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Clase Cliente
@@ -19,13 +20,12 @@ public class Cliente {
     /**
      * Atributos de la clase.
      */
-
     private Long id;
     private String nombre;
     private String apellidos;
     private String dni;
     private String email;
     private String telefono;
-    private LocalDate fecha_creacion;
+    private LocalDateTime fecha_creacion;
 
 }

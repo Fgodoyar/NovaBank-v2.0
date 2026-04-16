@@ -9,10 +9,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Interfaz MovimientoService que define los métodos que tendrá su futura implementación.
+ */
 public interface MovimientoService {
     Movimiento guardar(Movimiento movimiento);
     List<Movimiento> buscarPorCuentaId(Long cuentaId);
-    List<Movimiento> buscarPorCuentaIdYFechas(Long cuentaId, LocalDateTime inicio, LocalDateTime fin);
+    List<Movimiento> buscarPorCuentaIdYFechas(Long cuentaId, String inicio, String fin);
 
     Movimiento guardar(Movimiento movimiento, Connection conn);
 }
